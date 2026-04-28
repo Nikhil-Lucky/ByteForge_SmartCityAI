@@ -3,7 +3,17 @@ import pandas as pd
 from datetime import datetime
 import random
 from streamlit_folium import st_folium
-from utils.map_utils import generate_live_city_map, generate_emergency_response_map
+
+# Temporary placeholder functions (until Suhas adds real map_utils)
+def generate_live_city_map():
+    m = folium.Map(location=[12.9716, 77.5946], zoom_start=12)
+    folium.Marker([12.9250, 77.5850], popup="Ambulance AMB001", icon=folium.Icon(color="red")).add_to(m)
+    return m
+
+def generate_emergency_response_map():
+    m = folium.Map(location=[12.9250, 77.5850], zoom_start=14)
+    folium.Marker([12.9250, 77.5850], popup="Nearest Ambulance", icon=folium.Icon(color="green")).add_to(m)
+    return m
 
 st.set_page_config(page_title="SmartCity AI", layout="wide", page_icon="🏙️")
 
@@ -259,7 +269,7 @@ if st.button("Send", type="primary") and user_query:
 
             st.dataframe(ev_data, use_container_width=True)
             st.success("AI Suggestion: Go to BESCOM EV Charging Station because it is nearest and has available slots.")
-            st.caption("Slot availability is simulated for prototype demo. Real deployment can connect with EV charging APIs.")
+            st.caption("Slot availability is simulated for prototype demo.")
             show_simple_map(detected_area)
 
         # ====================== VEHICLE SERVICE ======================
@@ -273,7 +283,7 @@ if st.button("Send", type="primary") and user_query:
             ], columns=["Service Center", "Distance", "Service Type", "Status"])
 
             st.dataframe(service_data, use_container_width=True)
-            st.info("AI Note: If you meant EV charging, search for 'EV charging near me'. If you meant Honda support, these are nearby service options.")
+            st.info("AI Note: If you meant EV charging, search for 'EV charging near me'.")
             show_simple_map(detected_area)
 
         # ====================== GENERAL CITY HELP ======================
@@ -285,14 +295,7 @@ I understood your query: **{user_query}**
 
 **Detected Area:** {detected_area}
 
-SmartCity AI can currently help with:
-- 🚑 Ambulance and emergency response
-- 🏥 Hospital bed discovery
-- 🛣️ Traffic and route guidance
-- 📢 Civic complaints
-- 🔋 EV charging points
-- 🛠️ Vehicle service centers
-- 🗺️ Map-based city support
+SmartCity AI can currently help with ambulance, hospital, traffic, complaints, EV charging, vehicle service, etc.
 """)
             show_simple_map(detected_area)
 
