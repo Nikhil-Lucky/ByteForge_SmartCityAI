@@ -4,6 +4,7 @@ from datetime import datetime
 import random
 from streamlit_folium import st_folium
 import folium   # Added this missing import
+import json     # Shahid added for mock data loading
 
 # Temporary placeholder functions (until Suhas adds real map_utils)
 def generate_live_city_map():
@@ -36,6 +37,25 @@ st.markdown("""
     .stMetric {background-color: #1E2A44; padding: 15px; border-radius: 12px;}
 </style>
 """, unsafe_allow_html=True)
+
+# ====================== SHAHID'S DATA + COMPLAINT SYSTEM ======================
+# Load mock data
+@st.cache_data
+def load_mock_data():
+    try:
+        with open("mock_data/ambulances.json", "r") as f:
+            ambulances = json.load(f)
+        with open("mock_data/hospitals.json", "r") as f:
+            hospitals = json.load(f)
+        return ambulances, hospitals
+    except:
+        return [], []
+
+ambulances_data, hospitals_data = load_mock_data()
+
+# Complaint persistence using session state
+if "complaints" not in st.session_state:
+    st.session_state.complaints = []
 
 # ====================== AREA DATA ======================
 AREA_COORDS = {
@@ -167,11 +187,11 @@ if page == "🏠 Home":
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Ambulances", "8 Active")
     c2.metric("Hospitals", "12 Online")
-    c3.metric("Open Complaints", "43")
+    c3.metric("Open Complaints", len(st.session_state.complaints))
     c4.metric("Traffic Hotspots", "6")
     c5.metric("Avg Response", "9 min")
 
-# ====================== LIVE MAP PAGE (Suhas Enhanced) ======================
+# ====================== LIVE MAP PAGE ======================
 if page == "🗺️ Live Map":
     st.divider()
     st.subheader("🗺️ Live City Map")
@@ -261,9 +281,18 @@ if st.button("Send", type="primary") and user_query:
             st.warning("AI Action: Route optimized based on congestion, estimated delay, and travel safety.")
             show_simple_map(detected_area)
 
-        # ====================== CIVIC COMPLAINT ======================
+        # ====================== CIVIC COMPLAINT (Shahid Enhanced) ======================
         elif intent == "Civic Complaint":
             comp_id = f"COMP-{datetime.now().strftime('%H%M%S')}"
+            
+            # Shahid: Save complaint to session state
+            st.session_state.complaints.append({
+                "id": comp_id,
+                "issue": user_query,
+                "area": detected_area,
+                "time": datetime.now().strftime("%H:%M:%S"),
+                "status": "Forwarded to BBMP"
+            })
 
             st.subheader("📢 Civic Complaint Registered")
 
@@ -334,6 +363,12 @@ elif page == "📢 Complaints":
     st.divider()
     st.subheader("📢 Complaint Module")
     st.write("Use the chat above and type: **Pothole in Electronic City**")
+    
+    # Shahid: Show complaint history
+    if st.session_state.complaints:
+        st.write("**Your Recent Complaints**")
+        df = pd.DataFrame(st.session_state.complaints)
+        st.dataframe(df, use_container_width=True)
 
 # ====================== QUICK ACTIONS ======================
 st.divider()
@@ -365,4 +400,4 @@ with cols[5]:
     if st.button("🛠️ Service"):
         st.info("Type: Honda service center near me")
 
-st.caption("ByteForge_SmartCityAI • Beautiful UI Enhanced by Sunay")
+st.caption("ByteForge_SmartCityAI • Data + Complaint System Enhanced by Shahid")
