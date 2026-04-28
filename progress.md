@@ -1,7 +1,6 @@
 # ByteForge_SmartCityAI - Progress Log
 
 **Team:** ByteForge  
-**Date:** 28 April 2026
 
 ---
 
@@ -36,12 +35,15 @@
 - [x] Quick action buttons added
 - [x] Mock data files added for ambulance, hospitals, traffic, and complaints
 - [x] .gitignore added to avoid pushing venv and cache files
+- [x] Beautiful modern UI styling added (Sunay)
+- [x] Interactive Folium maps + live tracking added (Suhas)
+- [x] Complaint persistence and history added (Shahid)
 
 ---
 
 ## Work Completed Since Checkpoint 1
 
-Since Checkpoint 1, we improved the prototype from a basic Streamlit structure into a working chat-based SmartCity AI assistant.
+Since Checkpoint 1, we improved the prototype from a basic Streamlit structure into a **fully working chat-based SmartCity AI assistant**.
 
 The system now allows users to type city-related problems in natural language. Based on the input, the system detects the intent, detects the Bengaluru area, assigns a priority score, explains the AI decision, and shows useful city-level action.
 
@@ -64,16 +66,16 @@ Supported user queries include:
 - Added intent detection
 - Added priority score
 - Added AI reasoning flow
-- Updated app.py
+- Updated app.py (core AI system)
 
 ### Sunay:
-- UI and chat interface planned/in progress
+- Added modern beautiful UI styling and layout improvements
 
 ### Suhas:
-- Map integration support added using Streamlit Folium
+- Added interactive Folium maps and live tracking
 
 ### Shahid:
-- Mock data files added for testing
+- Added mock data files and complaint persistence
 
 ---
 
