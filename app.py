@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 import random
 from streamlit_folium import st_folium
+import folium   # Added this missing import
 
 # Temporary placeholder functions (until Suhas adds real map_utils)
 def generate_live_city_map():
