@@ -18,6 +18,25 @@ def generate_emergency_response_map():
 
 st.set_page_config(page_title="SmartCity AI", layout="wide", page_icon="🏙️")
 
+# ====================== SUNAY'S BEAUTIFUL STYLING ======================
+st.markdown("""
+<style>
+    .main {background-color: #0F1626;}
+    .stButton>button {
+        width: 100%;
+        background: linear-gradient(90deg, #00BFFF, #0099CC);
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        height: 50px;
+        font-size: 16px;
+    }
+    .stButton>button:hover {background: linear-gradient(90deg, #0099CC, #00BFFF);}
+    h1, h2, h3 {color: #00BFFF !important;}
+    .stMetric {background-color: #1E2A44; padding: 15px; border-radius: 12px;}
+</style>
+""", unsafe_allow_html=True)
+
 # ====================== AREA DATA ======================
 AREA_COORDS = {
     "Jayanagar": (12.9250, 77.5938),
@@ -346,4 +365,4 @@ with cols[5]:
     if st.button("🛠️ Service"):
         st.info("Type: Honda service center near me")
 
-st.caption("ByteForge_SmartCityAI • Testing Version | Multi-Agent Ready")
+st.caption("ByteForge_SmartCityAI • Beautiful UI Enhanced by Sunay")
